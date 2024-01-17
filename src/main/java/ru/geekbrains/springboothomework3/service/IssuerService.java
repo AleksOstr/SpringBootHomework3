@@ -33,4 +33,12 @@ public class IssuerService {
     return issue;
   }
 
+  public Issue getIssueById(long id) {
+    Issue issue = issueRepository.getById(id);
+    if (issue == null) {
+      throw new NoSuchElementException();
+    }
+    return issue;
+  }
+
 }
