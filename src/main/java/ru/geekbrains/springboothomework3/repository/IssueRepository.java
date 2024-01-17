@@ -28,4 +28,8 @@ public class IssueRepository {
             .orElse(null);
   }
 
+  public List<Issue> getIssues() {
+    return issues;
+  }
+
 }
