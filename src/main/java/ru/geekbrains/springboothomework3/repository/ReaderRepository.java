@@ -1,8 +1,8 @@
-package ru.gb.springdemo.repository;
+package ru.geekbrains.springboothomework3.repository;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Repository;
-import ru.gb.springdemo.model.Reader;
+import ru.geekbrains.springboothomework3.model.Reader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ public class ReaderRepository {
   @PostConstruct
   public void generateData() {
     readers.addAll(List.of(
-      new ru.gb.springdemo.model.Reader("Игорь")
+      new Reader("Игорь")
     ));
   }
 

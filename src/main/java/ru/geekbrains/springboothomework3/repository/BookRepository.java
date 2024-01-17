@@ -1,8 +1,8 @@
-package ru.gb.springdemo.repository;
+package ru.geekbrains.springboothomework3.repository;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Repository;
-import ru.gb.springdemo.model.Book;
+import ru.geekbrains.springboothomework3.model.Book;
 
 import java.util.ArrayList;
 import java.util.List;

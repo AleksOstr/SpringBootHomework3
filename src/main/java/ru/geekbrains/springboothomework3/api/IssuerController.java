@@ -1,12 +1,15 @@
-package ru.gb.springdemo.api;
+package ru.geekbrains.springboothomework3.api;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import ru.gb.springdemo.model.Issue;
-import ru.gb.springdemo.service.IssuerService;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import ru.geekbrains.springboothomework3.model.Issue;
+import ru.geekbrains.springboothomework3.service.IssuerService;
 
 import java.util.NoSuchElementException;
 

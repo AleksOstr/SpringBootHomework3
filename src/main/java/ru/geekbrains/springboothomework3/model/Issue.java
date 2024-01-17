@@ -1,4 +1,4 @@
-package ru.gb.springdemo.model;
+package ru.geekbrains.springboothomework3.model;
 
 import lombok.Data;
 

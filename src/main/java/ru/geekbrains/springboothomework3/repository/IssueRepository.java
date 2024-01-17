@@ -1,7 +1,7 @@
-package ru.gb.springdemo.repository;
+package ru.geekbrains.springboothomework3.repository;
 
 import org.springframework.stereotype.Repository;
-import ru.gb.springdemo.model.Issue;
+import ru.geekbrains.springboothomework3.model.Issue;
 
 import java.util.ArrayList;
 import java.util.List;
