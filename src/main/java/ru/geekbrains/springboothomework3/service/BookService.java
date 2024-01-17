@@ -16,7 +16,11 @@ public class BookService {
     }
 
     public Book getById(long id) {
-        return bookRepository.getBookById(id);
+        Book book = bookRepository.getBookById(id);
+        if (book == null) {
+            throw new NoSuchElementException();
+        }
+        return book;
     }
 
     public Book insertBook(Book book) {
