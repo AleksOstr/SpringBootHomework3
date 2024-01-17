@@ -5,6 +5,7 @@ import ru.geekbrains.springboothomework3.model.Issue;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 public class IssueRepository {
@@ -18,6 +19,13 @@ public class IssueRepository {
   public void save(Issue issue) {
     // insert into ....
     issues.add(issue);
+  }
+
+  public Issue getById(long id) {
+    return issues.stream()
+            .filter(it -> Objects.equals(it.getId(), id))
+            .findFirst()
+            .orElse(null);
   }
 
 }
