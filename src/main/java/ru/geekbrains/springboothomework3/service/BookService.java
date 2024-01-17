@@ -1,6 +1,7 @@
 package ru.geekbrains.springboothomework3.service;
 
 import org.springframework.stereotype.Service;
+import ru.geekbrains.springboothomework3.api.request.BookRequest;
 import ru.geekbrains.springboothomework3.model.Book;
 import ru.geekbrains.springboothomework3.repository.BookRepository;
 
@@ -23,7 +24,11 @@ public class BookService {
         return book;
     }
 
-    public Book insertBook(Book book) {
+    public Book insertBook(BookRequest request) {
+        if (request.getName() == null) {
+            throw new NullPointerException();
+        }
+        Book book = new Book(request.getName());
         bookRepository.insertBook(book);
         return book;
     }
