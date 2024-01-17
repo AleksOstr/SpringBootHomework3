@@ -30,4 +30,12 @@ public class ReaderRepository {
       .orElse(null);
   }
 
+  public void insertReader(Reader reader) {
+    readers.add(reader);
+  }
+
+  public void deleteReader(long id) {
+    readers.remove(getReaderById(id));
+  }
+
 }
