@@ -41,7 +41,11 @@ public class BookController {
 
     @PostMapping
     public ResponseEntity<Book> insertBook(@RequestBody BookRequest request) {
-        Book book = service.insertBook(new Book(request.getName()));
-        return ResponseEntity.status(HttpStatus.CREATED).body(book);
+        try {
+            Book book = service.insertBook(request);
+            return ResponseEntity.status(HttpStatus.CREATED).body(book);
+        } catch (NullPointerException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 }
