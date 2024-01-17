@@ -1,4 +1,4 @@
-package ru.geekbrains.springboothomework3.api;
+package ru.geekbrains.springboothomework3.api.request;
 
 import lombok.Data;
 

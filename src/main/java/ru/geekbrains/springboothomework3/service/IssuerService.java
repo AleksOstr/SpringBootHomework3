@@ -2,7 +2,7 @@ package ru.geekbrains.springboothomework3.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.geekbrains.springboothomework3.api.IssueRequest;
+import ru.geekbrains.springboothomework3.api.request.IssueRequest;
 import ru.geekbrains.springboothomework3.model.Issue;
 import ru.geekbrains.springboothomework3.repository.BookRepository;
 import ru.geekbrains.springboothomework3.repository.IssueRepository;
