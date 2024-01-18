@@ -8,6 +8,7 @@ import ru.geekbrains.springboothomework3.api.request.IssueRequest;
 import ru.geekbrains.springboothomework3.model.Issue;
 import ru.geekbrains.springboothomework3.service.IssuerService;
 
+import javax.naming.OperationNotSupportedException;
 import java.util.NoSuchElementException;
 
 @Slf4j
@@ -36,6 +37,8 @@ public class IssuerController {
             issue = service.issue(request);
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
+        } catch (OperationNotSupportedException e) {
+            return ResponseEntity.badRequest().build();
         }
 
         return ResponseEntity.status(HttpStatus.CREATED).body(issue);
