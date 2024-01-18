@@ -2,6 +2,7 @@ package ru.geekbrains.springboothomework3.repository;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Repository;
+import ru.geekbrains.springboothomework3.model.Issue;
 import ru.geekbrains.springboothomework3.model.Reader;
 
 import java.util.ArrayList;
@@ -36,6 +37,13 @@ public class ReaderRepository {
 
   public void deleteReader(long id) {
     readers.remove(getReaderById(id));
+  }
+
+  public List<Issue> getReaderIssues(long id) {
+    return readers.stream()
+            .filter(it -> Objects.equals(it.getId(), id))
+            .findFirst()
+            .orElseThrow().getReaderIssues();
   }
 
 }

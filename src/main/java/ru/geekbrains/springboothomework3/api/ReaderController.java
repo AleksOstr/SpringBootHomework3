@@ -4,9 +4,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.springboothomework3.api.request.ReaderRequest;
+import ru.geekbrains.springboothomework3.model.Issue;
 import ru.geekbrains.springboothomework3.model.Reader;
 import ru.geekbrains.springboothomework3.service.ReaderService;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
@@ -26,6 +28,16 @@ public class ReaderController {
             return ResponseEntity.status(HttpStatus.OK).body(reader);
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @GetMapping("/{id}/issue")
+    public ResponseEntity<List<Issue>> getReaderIssues(@PathVariable Long id) {
+        try {
+            List<Issue> issues = service.getReaderIssues(id);
+            return ResponseEntity.ok().body(issues);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
         }
     }
 

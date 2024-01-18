@@ -39,6 +39,7 @@ public class IssuerService {
 
 
     Issue issue = new Issue(request.getBookId(), request.getReaderId());
+    readerRepository.getReaderById(request.getReaderId()).getReaderIssues().add(issue);
     issueRepository.save(issue);
     return issue;
   }

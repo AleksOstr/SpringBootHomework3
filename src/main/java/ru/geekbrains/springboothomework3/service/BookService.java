@@ -16,7 +16,7 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public Book getById(long id) {
+    public Book getById(long id) throws NoSuchElementException{
         Book book = bookRepository.getBookById(id);
         if (book == null) {
             throw new NoSuchElementException();
@@ -24,7 +24,7 @@ public class BookService {
         return book;
     }
 
-    public Book insertBook(BookRequest request) {
+    public Book insertBook(BookRequest request) throws NullPointerException{
         if (request.getName() == null) {
             throw new NullPointerException();
         }
@@ -33,7 +33,7 @@ public class BookService {
         return book;
     }
 
-    public void delete(long id) {
+    public void delete(long id) throws NoSuchElementException{
         if (bookRepository.getBookById(id) == null) {
             throw new NoSuchElementException();
         }
