@@ -38,7 +38,7 @@ public class IssuerController {
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         } catch (OperationNotSupportedException e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
 
         return ResponseEntity.status(HttpStatus.CREATED).body(issue);

@@ -52,7 +52,7 @@ public class ReaderController {
     }
 
     @PostMapping
-    public ResponseEntity<Reader> insertReader(ReaderRequest request) {
+    public ResponseEntity<Reader> insertReader(@RequestBody ReaderRequest request) {
         try {
             Reader reader = service.insertReader(request);
             return ResponseEntity.status(HttpStatus.OK).body(reader);
