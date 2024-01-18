@@ -44,6 +44,19 @@ public class IssuerController {
         return ResponseEntity.status(HttpStatus.CREATED).body(issue);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Issue> closeIssue(@PathVariable Long id) {
+        final Issue issue;
+        try {
+            issue  = service.closeIssue(id);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        } catch (OperationNotSupportedException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
+        return ResponseEntity.ok().body(issue);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Issue> getIssueById(@PathVariable Long id) {
         try {

@@ -10,6 +10,7 @@ import ru.geekbrains.springboothomework3.repository.IssueRepository;
 import ru.geekbrains.springboothomework3.repository.ReaderRepository;
 
 import javax.naming.OperationNotSupportedException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -33,7 +34,7 @@ public class IssuerService {
     if (readerRepository.getReaderById(request.getReaderId()) == null) {
       throw new NoSuchElementException("Не найден читатель с идентификатором \"" + request.getReaderId() + "\"");
     }
-    if (checkReaderForIssues(request.getReaderId())) {
+    if (checkReaderForOpenedIssues(request.getReaderId())) {
       throw new OperationNotSupportedException("Превышен лимит выдачи");
     }
 
@@ -52,10 +53,24 @@ public class IssuerService {
     return issue;
   }
 
-  private boolean checkReaderForIssues(long readerId) {
+  public Issue closeIssue(long id) throws NoSuchElementException, OperationNotSupportedException {
+    Issue issue = issueRepository.getById(id);
+    if (issue == null) {
+      throw new NoSuchElementException();
+    }
+    if (issue.getReturnedAt() != null) {
+      throw new OperationNotSupportedException();
+    }
+    LocalDateTime returnTime = LocalDateTime.now();
+    issue.setReturnedAt(returnTime);
+    return issue;
+  }
+
+  private boolean checkReaderForOpenedIssues(long readerId) {
     List<Issue> issues = issueRepository.getIssues();
     List<Issue> readerIssues = issues.stream()
             .filter(it -> Objects.equals(it.getReaderId(), readerId))
+            .filter(it -> it.getReturnedAt() == null)
             .toList();
     return readerIssues.size() >= maxAllowedBooks;
   }
