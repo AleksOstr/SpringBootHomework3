@@ -16,6 +16,8 @@ public class Issue {
   private final long id;
   private final long bookId;
   private final long readerId;
+  private final String bookName;
+  private final String readerName;
 
   /**
    * Дата выдачи
@@ -24,10 +26,12 @@ public class Issue {
 
   private LocalDateTime returnedAt;
 
-  public Issue(long bookId, long readerId) {
+  public Issue(long bookId, long readerId, String bookName, String readerName) {
     this.id = sequence++;
     this.bookId = bookId;
     this.readerId = readerId;
+    this.bookName = bookName;
+    this.readerName = readerName;
     this.issuedAt = LocalDateTime.now();
   }
 
