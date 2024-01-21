@@ -50,4 +50,11 @@ public class ReaderRepository {
             .orElseThrow().getReaderIssues();
   }
 
+  public List<Issue> getOpenedIssues(long id) {
+    List<Issue> issues = getReaderIssues(id);
+    return issues.stream()
+            .filter(it -> it.getReturnedAt() == null)
+            .toList();
+  }
+
 }

@@ -48,4 +48,8 @@ public class ReaderService {
     public List<Issue> getReaderIssues(long id) throws NoSuchElementException{
         return readerRepository.getReaderIssues(id);
     }
+
+    public List<Issue> getOpenedIssues(long id) throws NoSuchElementException{
+        return readerRepository.getOpenedIssues(id);
+    }
 }
