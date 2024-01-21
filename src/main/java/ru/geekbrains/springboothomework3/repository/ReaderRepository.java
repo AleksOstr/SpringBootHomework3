@@ -31,6 +31,10 @@ public class ReaderRepository {
       .orElse(null);
   }
 
+  public List<Reader> getReaders() {
+    return readers;
+  }
+
   public void insertReader(Reader reader) {
     readers.add(reader);
   }
