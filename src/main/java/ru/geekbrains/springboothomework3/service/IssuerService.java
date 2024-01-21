@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.springboothomework3.api.request.IssueRequest;
+import ru.geekbrains.springboothomework3.model.Book;
 import ru.geekbrains.springboothomework3.model.Issue;
+import ru.geekbrains.springboothomework3.model.Reader;
 import ru.geekbrains.springboothomework3.repository.BookRepository;
 import ru.geekbrains.springboothomework3.repository.IssueRepository;
 import ru.geekbrains.springboothomework3.repository.ReaderRepository;
@@ -19,60 +21,62 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class IssuerService {
 
-  // спринг это все заинжектит
-  private final BookRepository bookRepository;
-  private final ReaderRepository readerRepository;
-  private final IssueRepository issueRepository;
+    // спринг это все заинжектит
+    private final BookRepository bookRepository;
+    private final ReaderRepository readerRepository;
+    private final IssueRepository issueRepository;
 
-  @Value("${application.max-allowed-books:1}")
-  private int maxAllowedBooks;
+    @Value("${application.max-allowed-books:1}")
+    private int maxAllowedBooks;
 
-  public Issue issue(IssueRequest request) throws OperationNotSupportedException, NoSuchElementException {
-    if (bookRepository.getBookById(request.getBookId()) == null) {
-      throw new NoSuchElementException("Не найдена книга с идентификатором \"" + request.getBookId() + "\"");
+    public Issue issue(IssueRequest request) throws OperationNotSupportedException, NoSuchElementException {
+        Book book = bookRepository.getBookById(request.getBookId());
+        if (book == null) {
+            throw new NoSuchElementException("Не найдена книга с идентификатором \"" + request.getBookId() + "\"");
+        }
+        Reader reader = readerRepository.getReaderById(request.getReaderId());
+        if (reader == null) {
+            throw new NoSuchElementException("Не найден читатель с идентификатором \"" + request.getReaderId() + "\"");
+        }
+        if (checkReaderForOpenedIssues(request.getReaderId())) {
+            throw new OperationNotSupportedException("Превышен лимит выдачи");
+        }
+
+
+        Issue issue = new Issue(request.getBookId(), request.getReaderId(), book.getName(), reader.getName());
+        readerRepository.getReaderById(request.getReaderId()).getReaderIssues().add(issue);
+        issueRepository.save(issue);
+        return issue;
     }
-    if (readerRepository.getReaderById(request.getReaderId()) == null) {
-      throw new NoSuchElementException("Не найден читатель с идентификатором \"" + request.getReaderId() + "\"");
-    }
-    if (checkReaderForOpenedIssues(request.getReaderId())) {
-      throw new OperationNotSupportedException("Превышен лимит выдачи");
+
+    public Issue getIssueById(long id) throws NoSuchElementException {
+        Issue issue = issueRepository.getById(id);
+        if (issue == null) {
+            throw new NoSuchElementException();
+        }
+        return issue;
     }
 
-
-    Issue issue = new Issue(request.getBookId(), request.getReaderId());
-    readerRepository.getReaderById(request.getReaderId()).getReaderIssues().add(issue);
-    issueRepository.save(issue);
-    return issue;
-  }
-
-  public Issue getIssueById(long id) throws NoSuchElementException {
-    Issue issue = issueRepository.getById(id);
-    if (issue == null) {
-      throw new NoSuchElementException();
+    public Issue closeIssue(long id) throws NoSuchElementException, OperationNotSupportedException {
+        Issue issue = issueRepository.getById(id);
+        if (issue == null) {
+            throw new NoSuchElementException();
+        }
+        if (issue.getReturnedAt() != null) {
+            throw new OperationNotSupportedException();
+        }
+        LocalDateTime returnTime = LocalDateTime.now();
+        issue.setReturnedAt(returnTime);
+        return issue;
     }
-    return issue;
-  }
 
-  public Issue closeIssue(long id) throws NoSuchElementException, OperationNotSupportedException {
-    Issue issue = issueRepository.getById(id);
-    if (issue == null) {
-      throw new NoSuchElementException();
+    private boolean checkReaderForOpenedIssues(long readerId) {
+        List<Issue> issues = issueRepository.getIssues();
+        List<Issue> readerIssues = issues.stream()
+                .filter(it -> Objects.equals(it.getReaderId(), readerId))
+                .filter(it -> it.getReturnedAt() == null)
+                .toList();
+        return readerIssues.size() >= maxAllowedBooks;
     }
-    if (issue.getReturnedAt() != null) {
-      throw new OperationNotSupportedException();
-    }
-    LocalDateTime returnTime = LocalDateTime.now();
-    issue.setReturnedAt(returnTime);
-    return issue;
-  }
-
-  private boolean checkReaderForOpenedIssues(long readerId) {
-    List<Issue> issues = issueRepository.getIssues();
-    List<Issue> readerIssues = issues.stream()
-            .filter(it -> Objects.equals(it.getReaderId(), readerId))
-            .filter(it -> it.getReturnedAt() == null)
-            .toList();
-    return readerIssues.size() >= maxAllowedBooks;
-  }
 
 }
