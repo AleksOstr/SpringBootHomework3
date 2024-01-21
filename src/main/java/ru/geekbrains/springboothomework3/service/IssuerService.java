@@ -57,6 +57,10 @@ public class IssuerService {
         return issue;
     }
 
+    public List<Issue> getIssues() {
+        return issueRepository.getIssues();
+    }
+
     public Issue closeIssue(long id) throws NoSuchElementException, OperationNotSupportedException {
         Issue issue = issueRepository.getById(id);
         if (issue == null) {
