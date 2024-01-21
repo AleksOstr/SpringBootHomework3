@@ -5,6 +5,7 @@ import ru.geekbrains.springboothomework3.api.request.BookRequest;
 import ru.geekbrains.springboothomework3.model.Book;
 import ru.geekbrains.springboothomework3.repository.BookRepository;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -22,6 +23,10 @@ public class BookService {
             throw new NoSuchElementException();
         }
         return book;
+    }
+
+    public List<Book> getBooks() {
+        return bookRepository.getBooks();
     }
 
     public Book insertBook(BookRequest request) throws NullPointerException{
