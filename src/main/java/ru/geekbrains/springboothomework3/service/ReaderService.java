@@ -25,6 +25,10 @@ public class ReaderService {
         return reader;
     }
 
+    public List<Reader> getReaders() {
+        return readerRepository.getReaders();
+    }
+
     public Reader insertReader(ReaderRequest request) throws NoSuchElementException{
         if (request.getName() == null) {
             throw new NullPointerException();
