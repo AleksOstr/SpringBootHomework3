@@ -22,4 +22,7 @@ public class IssueEntity {
     private LocalDateTime issuedAt;
     @Column(name = "returnedAt")
     private LocalDateTime returnedAt;
+
+    @ManyToOne
+    private ReaderEntity reader;
 }

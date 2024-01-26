@@ -15,7 +15,7 @@ public class ReaderEntity {
     @Column(name = "name")
     private String name;
 
-    @OneToMany
+    @OneToMany(mappedBy = "reader")
     @Column(name = "readerIssues")
     private List<IssueEntity> readerIssues;
 }
