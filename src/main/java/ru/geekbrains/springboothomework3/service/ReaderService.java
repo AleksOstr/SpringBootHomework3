@@ -5,6 +5,7 @@ import ru.geekbrains.springboothomework3.model.entity.ReaderEntity;
 import ru.geekbrains.springboothomework3.repository.ReaderRepository;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -15,19 +16,30 @@ public class ReaderService {
         this.readerRepository = repository;
     }
 
-    public Optional<ReaderEntity> findById(Long id) {
-        return readerRepository.findById(id);
+    public ReaderEntity findById(Long id) throws NoSuchElementException {
+        Optional<ReaderEntity> result = readerRepository.findById(id);
+        return result.orElseThrow();
     }
 
-    public List<ReaderEntity> findAll() {
-        return readerRepository.findAll();
+    public List<ReaderEntity> findAll() throws NoSuchElementException{
+        List<ReaderEntity> result =readerRepository.findAll();
+        if (result.isEmpty()){
+            throw new NoSuchElementException("Читателей не найдено");
+        } else {
+            return result;
+        }
     }
 
     public ReaderEntity save(ReaderEntity entity) {
         return readerRepository.save(entity);
     }
 
-    public void deleteById(Long id) {
-        readerRepository.deleteById(id);
+    public void deleteById(Long id) throws NoSuchElementException{
+        try {
+            findById(id);
+            readerRepository.deleteById(id);
+        } catch (NoSuchElementException e) {
+            throw new NoSuchElementException("Чиатель не найден");
+        }
     }
 }
