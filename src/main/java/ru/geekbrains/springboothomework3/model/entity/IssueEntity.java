@@ -1,11 +1,13 @@
 package ru.geekbrains.springboothomework3.model.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "issue")
+@Data
 public class IssueEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
