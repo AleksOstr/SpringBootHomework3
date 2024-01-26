@@ -1,13 +1,11 @@
 package ru.geekbrains.springboothomework3.service;
 
 import org.springframework.stereotype.Service;
-import ru.geekbrains.springboothomework3.api.request.ReaderRequest;
-import ru.geekbrains.springboothomework3.model.Issue;
-import ru.geekbrains.springboothomework3.model.Reader;
+import ru.geekbrains.springboothomework3.model.entity.ReaderEntity;
 import ru.geekbrains.springboothomework3.repository.ReaderRepository;
 
 import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class ReaderService {
@@ -17,39 +15,19 @@ public class ReaderService {
         this.readerRepository = repository;
     }
 
-    public Reader getReaderById(long id) throws NoSuchElementException{
-        Reader reader = readerRepository.getReaderById(id);
-        if (reader == null) {
-            throw new NoSuchElementException();
-        }
-        return reader;
+    public Optional<ReaderEntity> findById(Long id) {
+        return readerRepository.findById(id);
     }
 
-    public List<Reader> getReaders() {
-        return readerRepository.getReaders();
+    public List<ReaderEntity> findAll() {
+        return readerRepository.findAll();
     }
 
-    public Reader insertReader(ReaderRequest request) throws NoSuchElementException{
-        if (request.getName() == null) {
-            throw new NullPointerException();
-        }
-        Reader reader = new Reader(request.getName());
-        readerRepository.insertReader(reader);
-        return reader;
+    public ReaderEntity save(ReaderEntity entity) {
+        return readerRepository.save(entity);
     }
 
-    public void deleteReader(long id) throws NoSuchElementException{
-        if (readerRepository.getReaderById(id) == null) {
-            throw new NoSuchElementException();
-        }
-        readerRepository.deleteReader(id);
-    }
-
-    public List<Issue> getReaderIssues(long id) throws NoSuchElementException{
-        return readerRepository.getReaderIssues(id);
-    }
-
-    public List<Issue> getOpenedIssues(long id) throws NoSuchElementException{
-        return readerRepository.getOpenedIssues(id);
+    public void deleteById(Long id) {
+        readerRepository.deleteById(id);
     }
 }
