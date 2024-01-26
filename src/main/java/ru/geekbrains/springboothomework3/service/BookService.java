@@ -1,12 +1,11 @@
 package ru.geekbrains.springboothomework3.service;
 
 import org.springframework.stereotype.Service;
-import ru.geekbrains.springboothomework3.api.request.BookRequest;
-import ru.geekbrains.springboothomework3.model.Book;
+import ru.geekbrains.springboothomework3.model.entity.BookEntity;
 import ru.geekbrains.springboothomework3.repository.BookRepository;
 
 import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class BookService {
@@ -17,31 +16,20 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public Book getById(long id) throws NoSuchElementException{
-        Book book = bookRepository.getBookById(id);
-        if (book == null) {
-            throw new NoSuchElementException();
-        }
-        return book;
+    public Optional<BookEntity> findById(Long id) {
+        return bookRepository.findById(id);
     }
 
-    public List<Book> getBooks() {
-        return bookRepository.getBooks();
+    public List<BookEntity> findAll() {
+        return bookRepository.findAll();
     }
 
-    public Book insertBook(BookRequest request) throws NullPointerException{
-        if (request.getName() == null) {
-            throw new NullPointerException();
-        }
-        Book book = new Book(request.getName());
-        bookRepository.insertBook(book);
-        return book;
+    public BookEntity save(BookEntity entity) {
+        return bookRepository.save(entity);
     }
 
-    public void delete(long id) throws NoSuchElementException{
-        if (bookRepository.getBookById(id) == null) {
-            throw new NoSuchElementException();
-        }
-        bookRepository.delete(id);
+    public void delete(Long id) {
+        bookRepository.deleteById(id);
     }
+
 }
