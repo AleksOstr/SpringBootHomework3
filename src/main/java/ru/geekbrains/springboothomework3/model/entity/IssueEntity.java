@@ -25,6 +25,4 @@ public class IssueEntity {
     @Column(name = "returnedAt")
     private LocalDateTime returnedAt;
 
-    @ManyToOne
-    private ReaderEntity reader;
 }
