@@ -8,9 +8,10 @@
     <title>Readers</title>
 </head>
 <body>
-    <h1>All readers</h1>
+    <a href="/home">Домой</a><br>
+    <h3>Список читателей</h3>
     <ul>
-        <li th:each="reader : ${readers}"> <span th:text="${reader.getName()}"></span></li>
+        <li th:each="reader : ${readers}"> <span th:text="${reader.getId()} + ' ' + ${reader.getName()}"></span></li>
     </ul>
 </body>
 </html>
