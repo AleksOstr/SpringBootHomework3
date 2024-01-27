@@ -2,7 +2,10 @@ package ru.geekbrains.springboothomework3.api;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import ru.geekbrains.springboothomework3.model.entity.ReaderEntity;
 import ru.geekbrains.springboothomework3.service.ReaderService;
 
@@ -26,7 +29,7 @@ public class ReaderUIController {
             model.addAttribute("readers", readers);
             return "readers";
         } catch (NoSuchElementException e) {
-            return "readers";
+            return "404";
         }
     }
 

@@ -17,18 +17,13 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public BookEntity findById(Long id) throws NoSuchElementException{
+    public BookEntity findById(Long id) {
         Optional<BookEntity> result = bookRepository.findById(id);
         return result.orElseThrow();
     }
 
     public List<BookEntity> findAll() throws NoSuchElementException{
-        List<BookEntity> result = bookRepository.findAll();
-        if (result.isEmpty()) {
-            throw new NoSuchElementException("Книг не найдено");
-        } else {
-            return result;
-        }
+        return bookRepository.findAll();
     }
 
     public BookEntity save(BookEntity entity) {

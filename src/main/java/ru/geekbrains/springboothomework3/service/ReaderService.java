@@ -21,13 +21,8 @@ public class ReaderService {
         return result.orElseThrow();
     }
 
-    public List<ReaderEntity> findAll() throws NoSuchElementException{
-        List<ReaderEntity> result =readerRepository.findAll();
-        if (result.isEmpty()){
-            throw new NoSuchElementException("Читателей не найдено");
-        } else {
-            return result;
-        }
+    public List<ReaderEntity> findAll() {
+        return readerRepository.findAll();
     }
 
     public ReaderEntity save(ReaderEntity entity) {
