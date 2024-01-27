@@ -10,6 +10,8 @@
 <body>
     <h1><span th:text="${reader.getId()} + ' '"></span><span th:text="${reader.getName()}"></span></h1><br>
     <h2>Книги на руках</h2>
-    <ul th:each="issue : ${openedIssues}" th:text="${issue.getBookName()}"></ul>
+    <ul>
+        <li th:each="issue : ${openedIssues}"> <span th:text="${issue.getBookName()}"></span></li>
+    </ul>
 </body>
 </html>

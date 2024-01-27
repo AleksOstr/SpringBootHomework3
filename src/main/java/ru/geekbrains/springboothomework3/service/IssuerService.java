@@ -33,6 +33,7 @@ public class IssuerService {
         if (!checkReaderForOpenedIssues(entity.getReaderId())) {
             entity.setBookName(book.getName());
             entity.setReaderName(reader.getName());
+            reader.getReaderIssues().add(entity);
             return issueRepository.save(entity);
         } else {
             throw new OperationNotSupportedException("Превышен лимит выдачи");

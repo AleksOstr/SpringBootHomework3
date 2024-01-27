@@ -11,7 +11,9 @@
     <a href="/home">Домой</a><br>
     <h3>Список читателей</h3>
     <ul>
-        <li th:each="reader : ${readers}"> <span th:text="${reader.getId()} + ' ' + ${reader.getName()}"></span></li>
+        <li th:each="reader : ${readers}">
+            <a th:href="@{/ui/readers/{id}(id=${reader.getId()})}"><span th:text="${reader.getId()} + ' ' + ${reader.getName()}"></span></a>
+        </li>
     </ul>
 </body>
 </html>

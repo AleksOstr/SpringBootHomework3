@@ -1,6 +1,7 @@
 package ru.geekbrains.springboothomework3.service;
 
 import org.springframework.stereotype.Service;
+import ru.geekbrains.springboothomework3.model.entity.IssueEntity;
 import ru.geekbrains.springboothomework3.model.entity.ReaderEntity;
 import ru.geekbrains.springboothomework3.repository.ReaderRepository;
 
@@ -23,6 +24,10 @@ public class ReaderService {
 
     public List<ReaderEntity> findAll() {
         return readerRepository.findAll();
+    }
+
+    public List<IssueEntity> getOpenedReaderIssues(ReaderEntity reader) {
+        return reader.getReaderIssues().stream().filter(it -> it.getReturnedAt() == null).toList();
     }
 
     public ReaderEntity save(ReaderEntity entity) {
