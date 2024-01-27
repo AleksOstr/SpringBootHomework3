@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>New issue</title>
+</head>
+<body>
+<a href="/home">Домой</a><br>
+<h3>Новая запись о выдаче</h3>
+<form th:method="POST" th:action="@{/ui/issues}" th:object="${issue}">
+
+    <label for="reader">Выберите читателя</label>
+    <select id="reader" th:field="*{readerId}">
+        <option th:each="reader : ${readers}" th:value="${reader.getId()}" th:text="${reader.getName()}"></option>
+    </select><br>
+
+    <label for="book">Выберите книгу</label>
+    <select id="book" th:field="*{bookId}">
+        <option th:each="book : ${books}" th:value="${book.getId()}" th:text="${book.getName()}"></option>
+    </select><br>
+    <input type="submit" value="Создать"/>
+
+</form>
+</body>
+</html>

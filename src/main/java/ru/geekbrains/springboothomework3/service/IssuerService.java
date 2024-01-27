@@ -28,9 +28,11 @@ public class IssuerService {
     private int maxAllowedBooks;
 
     public IssueEntity save(IssueEntity entity) throws NoSuchElementException, OperationNotSupportedException {
-        BookEntity book = bookRepository.findById(entity.getId()).orElseThrow();
+        BookEntity book = bookRepository.findById(entity.getBookId()).orElseThrow();
         ReaderEntity reader = readerRepository.findById(entity.getReaderId()).orElseThrow();
         if (!checkReaderForOpenedIssues(entity.getReaderId())) {
+            entity.setBookName(book.getName());
+            entity.setReaderName(reader.getName());
             return issueRepository.save(entity);
         } else {
             throw new OperationNotSupportedException("Превышен лимит выдачи");
