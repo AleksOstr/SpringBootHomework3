@@ -27,7 +27,7 @@ public class BookUIController {
             model.addAttribute("books", bookService.findAll());
             return "books";
         } catch (NoSuchElementException e) {
-            return "books";
+            return "404";
         }
     }
 
