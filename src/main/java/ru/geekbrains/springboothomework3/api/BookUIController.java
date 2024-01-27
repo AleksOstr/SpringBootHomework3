@@ -3,26 +3,42 @@ package ru.geekbrains.springboothomework3.api;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.geekbrains.springboothomework3.model.Book;
+import ru.geekbrains.springboothomework3.model.entity.BookEntity;
 import ru.geekbrains.springboothomework3.service.BookService;
 
-import java.util.List;
+import java.util.NoSuchElementException;
 
 @Controller
 @RequestMapping("/ui/books")
 public class BookUIController {
 
-    private BookService service;
+    private final BookService bookService;
 
-    public BookUIController(BookService service) {
-        this.service = service;
+    public BookUIController(BookService bookService) {
+        this.bookService = bookService;
     }
 
     @GetMapping
     public String getBooks(Model model) {
-        List<Book> books = service.getBooks();
-        model.addAttribute("books", books);
-        return "books";
+        try {
+            model.addAttribute("books", bookService.findAll());
+            return "books";
+        } catch (NoSuchElementException e) {
+            return "books";
+        }
+    }
+
+    @GetMapping("/new")
+    public String newBook(@ModelAttribute("book") BookEntity book) {
+        return "new-book";
+    }
+
+    @PostMapping
+    public String createBook(@ModelAttribute("book")BookEntity book) {
+        bookService.save(book);
+        return "redirect:/ui/books";
     }
 }
