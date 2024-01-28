@@ -49,15 +49,6 @@ public class IssuerService {
         }
     }
 
-    public List<IssueEntity> findAllByReaderId(long readerId) {
-        List<IssueEntity> result = issueRepository.findAllByReaderId(readerId);
-        if (result.isEmpty()) {
-            throw new NoSuchElementException("Записей не найдено");
-        } else {
-            return result;
-        }
-    }
-
     public IssueEntity findById(Long id) throws NoSuchElementException{
         Optional<IssueEntity> result = issueRepository.findById(id);
         return result.orElseThrow();
@@ -66,6 +57,7 @@ public class IssuerService {
     public IssueEntity closeIssue(Long id) throws NoSuchElementException{
         IssueEntity issue = findById(id);
         issue.setReturnedAt(LocalDateTime.now());
+        issueRepository.save(issue);
         return issue;
     }
 

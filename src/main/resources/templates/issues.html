@@ -25,6 +25,10 @@
             <td th:text="${issue.getReaderName()}"></td>
             <td th:text="${issue.getIssuedAt()}"></td>
             <td th:text="${issue.getReturnedAt()}"></td>
+            <td>
+                <form th:method="PATCH" th:action="@{/ui/issues/{id}(id=${issue.getId()})}" >
+                    <input type="submit" value="Закрыть выдачу">
+                </form></td>
         </tr>
         </tbody>
     </table>
