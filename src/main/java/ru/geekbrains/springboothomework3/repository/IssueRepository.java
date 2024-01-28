@@ -9,5 +9,4 @@ import java.util.List;
 @Repository
 public interface IssueRepository extends JpaRepository<IssueEntity, Long> {
     List<IssueEntity> findAllByReaderIdAndReturnedAtNull(Long id);
-    List<IssueEntity> findAllByReaderId(Long id);
 }

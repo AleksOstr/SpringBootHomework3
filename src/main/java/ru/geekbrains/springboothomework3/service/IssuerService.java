@@ -27,14 +27,14 @@ public class IssuerService {
     @Value("${application.max-allowed-books:1}")
     private int maxAllowedBooks;
 
-    public IssueEntity save(IssueEntity entity) throws NoSuchElementException, OperationNotSupportedException {
+    public void save(IssueEntity entity) throws NoSuchElementException, OperationNotSupportedException {
         BookEntity book = bookRepository.findById(entity.getBookId()).orElseThrow();
         ReaderEntity reader = readerRepository.findById(entity.getReaderId()).orElseThrow();
         if (!checkReaderForOpenedIssues(entity.getReaderId())) {
             entity.setBookName(book.getName());
             entity.setReaderName(reader.getName());
             reader.getReaderIssues().add(entity);
-            return issueRepository.save(entity);
+            issueRepository.save(entity);
         } else {
             throw new OperationNotSupportedException("Превышен лимит выдачи");
         }
@@ -54,11 +54,10 @@ public class IssuerService {
         return result.orElseThrow();
     }
 
-    public IssueEntity closeIssue(Long id) throws NoSuchElementException{
+    public void closeIssue(Long id) throws NoSuchElementException{
         IssueEntity issue = findById(id);
         issue.setReturnedAt(LocalDateTime.now());
         issueRepository.save(issue);
-        return issue;
     }
 
 

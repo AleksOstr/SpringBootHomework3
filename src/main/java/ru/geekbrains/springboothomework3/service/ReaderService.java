@@ -30,8 +30,8 @@ public class ReaderService {
         return reader.getReaderIssues().stream().filter(it -> it.getReturnedAt() == null).toList();
     }
 
-    public ReaderEntity save(ReaderEntity entity) {
-        return readerRepository.save(entity);
+    public void save(ReaderEntity entity) {
+        readerRepository.save(entity);
     }
 
     public void delete(Long id) {

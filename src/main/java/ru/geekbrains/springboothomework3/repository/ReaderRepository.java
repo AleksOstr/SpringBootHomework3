@@ -6,6 +6,5 @@ import ru.geekbrains.springboothomework3.model.entity.ReaderEntity;
 
 @Repository
 public interface ReaderRepository extends JpaRepository<ReaderEntity, Long> {
-    void delete(ReaderEntity entity);
 
 }

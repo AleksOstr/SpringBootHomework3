@@ -26,8 +26,8 @@ public class BookService {
         return bookRepository.findAll();
     }
 
-    public BookEntity save(BookEntity entity) {
-        return bookRepository.save(entity);
+    public void save(BookEntity entity) {
+        bookRepository.save(entity);
     }
 
     public void deleteById(Long id) throws NoSuchElementException{
@@ -38,9 +38,4 @@ public class BookService {
             throw new NoSuchElementException("Книга не найдена");
         }
     }
-
-    public void delete(Long id) {
-        bookRepository.deleteById(id);
-    }
-
 }
