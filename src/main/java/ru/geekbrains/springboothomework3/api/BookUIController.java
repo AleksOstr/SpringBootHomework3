@@ -2,10 +2,7 @@ package ru.geekbrains.springboothomework3.api;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.springboothomework3.model.entity.BookEntity;
 import ru.geekbrains.springboothomework3.service.BookService;
 
@@ -39,6 +36,12 @@ public class BookUIController {
     @PostMapping
     public String createBook(@ModelAttribute("book")BookEntity book) {
         bookService.save(book);
+        return "redirect:/ui/books";
+    }
+
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable Long id) {
+        bookService.deleteById(id);
         return "redirect:/ui/books";
     }
 }

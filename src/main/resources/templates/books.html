@@ -11,7 +11,12 @@
     <a href="/home">Домой</a><br>
     <h3>Список книг</h3>
     <ul>
-        <li th:each="book : ${books}"><span th:text="${book.getId()} + ' ' + ${book.getName()}"></span></li>
+        <li th:each="book : ${books}">
+            <span th:text="${book.getId()} + ' ' + ${book.getName()}"></span>
+            <form th:method="DELETE" th:action="@{/ui/books/{id}(id=${book.getId()})}">
+                <input type="submit" value="Удалить книгу">
+            </form>
+        </li>
     </ul>
 </body>
 </html>
