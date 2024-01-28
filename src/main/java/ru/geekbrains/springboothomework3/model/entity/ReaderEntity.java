@@ -17,7 +17,7 @@ public class ReaderEntity {
     @Column(name = "name")
     private String name;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @Column(name = "readerIssues")
     private List<IssueEntity> readerIssues;
 }

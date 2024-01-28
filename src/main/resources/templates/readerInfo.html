@@ -14,5 +14,9 @@
     <ul>
         <li th:each="issue : ${openedIssues}"> <span th:text="${issue.getBookName()}"></span></li>
     </ul>
+
+    <form th:method="DELETE" th:action="@{/ui/readers/{id}(id=${reader.getId()})}">
+        <input type="submit" value="Удалить читателя">
+    </form>
 </body>
 </html>

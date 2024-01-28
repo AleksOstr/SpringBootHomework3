@@ -54,4 +54,10 @@ public class ReaderUIController {
         service.save(reader);
         return "redirect:/ui/readers";
     }
+
+    @DeleteMapping("/{id}")
+    public String deleteReader(@PathVariable Long id) {
+        service.delete(id);
+        return "redirect:/ui/readers";
+    }
 }

@@ -34,12 +34,7 @@ public class ReaderService {
         return readerRepository.save(entity);
     }
 
-    public void deleteById(Long id) throws NoSuchElementException{
-        try {
-            findById(id);
-            readerRepository.deleteById(id);
-        } catch (NoSuchElementException e) {
-            throw new NoSuchElementException("Чиатель не найден");
-        }
+    public void delete(Long id) {
+        readerRepository.deleteById(id);
     }
 }
