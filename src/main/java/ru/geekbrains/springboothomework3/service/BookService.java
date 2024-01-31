@@ -22,7 +22,7 @@ public class BookService {
         return result.orElseThrow();
     }
 
-    public List<BookEntity> findAll() throws NoSuchElementException{
+    public List<BookEntity> findAll() {
         return bookRepository.findAll();
     }
 
