@@ -1,5 +1,12 @@
 package ru.geekbrains.springboothomework3.api;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +22,7 @@ import java.util.NoSuchElementException;
 
 @Controller
 @RequestMapping("ui/issues")
+@Tag(name = "Issue")
 public class IssueUIController {
 
     private final IssuerService service;
@@ -25,6 +33,9 @@ public class IssueUIController {
     }
 
     @GetMapping
+    @Operation(summary = "Get all issues")
+    @ApiResponse(responseCode = "200", description = "Get the list of issues", content = {
+            @Content(mediaType = "text/html", schema = @Schema(implementation = IssueEntity.class))})
     public String getIssues(Model model) {
         try {
             List<IssueEntity> issues = service.findAll();
@@ -36,6 +47,9 @@ public class IssueUIController {
     }
 
     @GetMapping("/new")
+    @Operation(summary = "Return HTML page for creating new issue")
+    @ApiResponse(responseCode = "200", description = "Get HTML page for creating new issue", content = {
+            @Content(mediaType = "text/html")})
     public String newIssue(Model model) {
         List<ReaderEntity> readers = getReaders();
         List<BookEntity> books = getBooks();
@@ -46,7 +60,13 @@ public class IssueUIController {
     }
 
     @PostMapping
-    public String createIssue(@ModelAttribute("issue") IssueEntity issue) {
+    @Operation(summary = "Create new issue")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "New issue created", content = {
+                    @Content(mediaType = "text/html")}),
+            @ApiResponse(responseCode = "404", description = "Book or reader not found"),
+            @ApiResponse(responseCode = "403", description = "Reader has maximum of allowed books")})
+    public String createIssue(@Parameter(description = "New issue") @ModelAttribute("issue") IssueEntity issue) {
         try {
             service.save(issue);
             return "redirect:/ui/issues";
@@ -58,7 +78,10 @@ public class IssueUIController {
     }
 
     @PatchMapping("/{id}")
-    public String closeIssue(@PathVariable Long id) {
+    @Operation(summary = "Close issue")
+    @ApiResponse(responseCode = "200", description = "Return time set", content = {
+            @Content(mediaType = "text/html")})
+    public String closeIssue(@Parameter(description = "ID of issue to set return time") @PathVariable Long id) {
         service.closeIssue(id);
         return "redirect:/ui/issues";
     }
