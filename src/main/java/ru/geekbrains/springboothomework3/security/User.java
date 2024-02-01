@@ -26,4 +26,13 @@ public class User {
             inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")}
     )
     private List<Role> roles;
+
+    public User(String login, String password, List<Role> roles) {
+        this.login = login;
+        this.password = password;
+        this.roles = roles;
+    }
+
+    public User() {
+    }
 }
