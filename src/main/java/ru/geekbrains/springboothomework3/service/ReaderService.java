@@ -1,6 +1,7 @@
 package ru.geekbrains.springboothomework3.service;
 
 import org.springframework.stereotype.Service;
+import ru.geekbrains.springboothomework3.api.request.ReaderRequest;
 import ru.geekbrains.springboothomework3.model.entity.IssueEntity;
 import ru.geekbrains.springboothomework3.model.entity.ReaderEntity;
 import ru.geekbrains.springboothomework3.repository.ReaderRepository;
@@ -30,8 +31,10 @@ public class ReaderService {
         return reader.getReaderIssues().stream().filter(it -> it.getReturnedAt() == null).toList();
     }
 
-    public void save(ReaderEntity entity) {
-        readerRepository.save(entity);
+    public ReaderEntity save(ReaderRequest request) {
+        ReaderEntity reader = new ReaderEntity(request.getName());
+        readerRepository.save(reader);
+        return reader;
     }
 
     public void delete(Long id) {

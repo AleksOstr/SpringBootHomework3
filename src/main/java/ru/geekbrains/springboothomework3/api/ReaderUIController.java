@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.geekbrains.springboothomework3.api.request.ReaderRequest;
 import ru.geekbrains.springboothomework3.model.entity.IssueEntity;
 import ru.geekbrains.springboothomework3.model.entity.ReaderEntity;
 import ru.geekbrains.springboothomework3.service.ReaderService;
@@ -69,7 +70,7 @@ public class ReaderUIController {
     @Operation(summary = "Create new reader")
     @ApiResponse(responseCode = "200", description = "New reader created", content = {
             @Content(mediaType = "text/html")})
-    public String createReader(@Parameter(description = "New reader") @ModelAttribute("reader") ReaderEntity reader) {
+    public String createReader(@Parameter(description = "New reader") @ModelAttribute("reader") ReaderRequest reader) {
         service.save(reader);
         return "redirect:/ui/readers";
     }

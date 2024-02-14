@@ -2,12 +2,14 @@ package ru.geekbrains.springboothomework3.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
 @Table(name = "reader")
 @Data
+@NoArgsConstructor
 public class ReaderEntity {
 
     @Id
@@ -20,4 +22,8 @@ public class ReaderEntity {
     @OneToMany(cascade = CascadeType.ALL)
     @Column(name = "readerIssues")
     private List<IssueEntity> readerIssues;
+
+    public ReaderEntity(String name) {
+        this.name = name;
+    }
 }

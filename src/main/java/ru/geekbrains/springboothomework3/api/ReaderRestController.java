@@ -7,10 +7,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import ru.geekbrains.springboothomework3.api.request.ReaderRequest;
 import ru.geekbrains.springboothomework3.model.entity.ReaderEntity;
 import ru.geekbrains.springboothomework3.service.ReaderService;
 
@@ -49,5 +49,12 @@ public class ReaderRestController {
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @PostMapping("/api/readers/save")
+    public ResponseEntity<ReaderEntity> save(@RequestBody ReaderRequest request) {
+        ReaderEntity reader = readerService.save(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(reader);
+
     }
 }
