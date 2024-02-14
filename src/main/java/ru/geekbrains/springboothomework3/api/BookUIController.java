@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.geekbrains.springboothomework3.api.request.BookRequest;
 import ru.geekbrains.springboothomework3.model.entity.BookEntity;
 import ru.geekbrains.springboothomework3.service.BookService;
 
@@ -44,7 +45,7 @@ public class BookUIController {
     @Operation(summary = "Create new book")
     @ApiResponse(responseCode = "200", description = "New book created", content = {
             @Content(mediaType = "text/html")})
-    public String createBook(@Parameter(description = "New book") @ModelAttribute("book") BookEntity book) {
+    public String createBook(@Parameter(description = "New book") @ModelAttribute("book") BookRequest book) {
         bookService.save(book);
         return "redirect:/ui/books";
     }

@@ -1,6 +1,7 @@
 package ru.geekbrains.springboothomework3.service;
 
 import org.springframework.stereotype.Service;
+import ru.geekbrains.springboothomework3.api.request.BookRequest;
 import ru.geekbrains.springboothomework3.model.entity.BookEntity;
 import ru.geekbrains.springboothomework3.repository.BookRepository;
 
@@ -26,8 +27,10 @@ public class BookService {
         return bookRepository.findAll();
     }
 
-    public void save(BookEntity entity) {
-        bookRepository.save(entity);
+    public BookEntity save(BookRequest request) {
+        BookEntity book = new BookEntity(request.getName());
+        bookRepository.save(book);
+        return book;
     }
 
     public void deleteById(Long id) throws NoSuchElementException{
