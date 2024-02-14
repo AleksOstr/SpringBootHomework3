@@ -77,4 +77,21 @@ public class BookRestControllerTest {
 
         bookRepository.deleteAll();
     }
+
+    @Test
+    void findByIdTestOk() {
+        BookEntity expected = bookRepository.save(new BookEntity("Book"));
+
+        BookEntity response = webClient.get()
+                .uri("/api/books/" + expected.getId())
+                .exchange()
+                .expectBody(BookEntity.class)
+                .returnResult().getResponseBody();
+
+        Assertions.assertNotNull(response);
+        Assertions.assertEquals(expected.getId(), response.getId());
+        Assertions.assertEquals(expected.getName(), response.getName());
+
+        bookRepository.deleteAll();
+    }
 }
