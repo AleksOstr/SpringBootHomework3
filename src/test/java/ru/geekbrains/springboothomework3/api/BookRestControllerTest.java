@@ -105,5 +105,7 @@ public class BookRestControllerTest {
                 .uri("/api/books/" + maxId + "1")
                 .exchange()
                 .expectStatus().isNotFound();
+
+        bookRepository.deleteAll();
     }
 }
