@@ -94,4 +94,16 @@ public class BookRestControllerTest {
 
         bookRepository.deleteAll();
     }
+
+    @Test
+    void findByIdTestNotFound() {
+        BookEntity book = bookRepository.save(new BookEntity("Book"));
+
+        Long maxId = jdbcTemplate.queryForObject("SELECT max(id) FROM book", Long.class);
+
+        webClient.get()
+                .uri("/api/books/" + maxId + "1")
+                .exchange()
+                .expectStatus().isNotFound();
+    }
 }
